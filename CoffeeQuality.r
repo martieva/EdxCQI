@@ -313,8 +313,6 @@ predictions_simple_rpart <- predict(model_simple_rpart, test_set)
 model_simple_rpart_rsme <- RMSE(test_set$Total.Cup.Points, predictions_simple_rpart)
 data.frame(method = 'Simple RPART', RMSE = model_simple_rpart_rsme, cp=model_simple_rpart$bestTune) %>% knitr::kable()
 
-#And examine it
-rpart.plot(model_simple_rpart$finalModel)
 
 #See how our knn predictions align with the data, taking steps
 train_set %>% mutate(y_hat = predict(model_simple_rpart$finalModel)) %>% ggplot() 
@@ -336,8 +334,6 @@ predictions_rpart <- predict(model_rpart, test_set)
 model_rpart_rsme <- RMSE(test_set$Total.Cup.Points, predictions_rpart)
 data.frame(method = 'RPART', RMSE = model_rpart_rsme) %>% knitr::kable()
 
-#And exampine the model visually to see the most important predictors
-rpart.plot(model_rpart$finalModel)
 
 #Tune a random forest to find best mtry
 control <- trainControl(method="cv", number = 10)
