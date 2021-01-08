@@ -315,17 +315,11 @@ data.frame(method = 'Simple RPART', RMSE = model_simple_rpart_rsme, cp=model_sim
 
 
 #See how our knn predictions align with the data, taking steps
-train_set %>% mutate(y_hat = predict(model_simple_rpart$finalModel)) %>% ggplot() 
-+ geom_point(aes(Category.Two.Defects, Total.Cup.Points)) 
-+ geom_step(aes(Category.Two.Defects, y_hat), col="red") 
-+ theme_economist()
+train_set %>% mutate(y_hat = predict(model_simple_rpart$finalModel)) %>% ggplot() + geom_point(aes(Category.Two.Defects, Total.Cup.Points)) + geom_step(aes(Category.Two.Defects, y_hat), col="red") + theme_economist()
 
 #Construct a full knn model with all predictors
 #We will have many predictors as the categorical columns will be expanded
-model_rpart <- train(Total.Cup.Points ~ altitude_mean_meters 
-                     + Color + Country.of.Origin + Harvest.Year + Moisture 
-                     + Processing.Method + Variety + Category.One.Defects 
-                     + Category.Two.Defects, 
+model_rpart <- train(Total.Cup.Points ~ altitude_mean_meters + Color + Country.of.Origin + Harvest.Year + Moisture + Processing.Method + Variety + Category.One.Defects + Category.Two.Defects, 
                      data = train_set, 
                      method = 'rpart', 
                      na.action = na.omit,
@@ -338,9 +332,7 @@ data.frame(method = 'RPART', RMSE = model_rpart_rsme) %>% knitr::kable()
 #Tune a random forest to find best mtry
 control <- trainControl(method="cv", number = 10)
 grid <- data.frame(mtry = seq(1,51,5))
-fit_rf <- train(Total.Cup.Points ~ altitude_mean_meters + Color + Country.of.Origin + 
-                  Harvest.Year + Moisture + Processing.Method + Variety + 
-                  Category.One.Defects + Category.Two.Defects, 
+fit_rf <- train(Total.Cup.Points ~ altitude_mean_meters + Color + Country.of.Origin + Harvest.Year + Moisture + Processing.Method + Variety + Category.One.Defects + Category.Two.Defects, 
                 data = train_set, 
                 method = 'rf', 
                 na.action = na.omit,
@@ -350,9 +342,7 @@ fit_rf <- train(Total.Cup.Points ~ altitude_mean_meters + Color + Country.of.Ori
 ggplot(fit_rf) + theme_economist()
 
 #Construct a random forest with the tuned mtry
-model_rf <- train(Total.Cup.Points ~ altitude_mean_meters + Color + Country.of.Origin +
-                    Harvest.Year + Moisture + Variety + 
-                    Category.One.Defects + Category.Two.Defects, 
+model_rf <- train(Total.Cup.Points ~ altitude_mean_meters + Color + Country.of.Origin + Harvest.Year + Moisture + Variety + Category.One.Defects + Category.Two.Defects, 
                   data = train_set, 
                   method = 'rf', 
                   na.action = na.omit,
