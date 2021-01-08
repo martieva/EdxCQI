@@ -77,12 +77,7 @@ cor(coffee$Total.Cup.Points, coffee$Harvest.Year, use = 'complete.obs')
 mean(coffee$Total.Cup.Points > 80)
 
 #Graph of our target variable, which has a fairly normal distribution.
-coffee %>% ggplot(aes(Total.Cup.Points)) 
-  + geom_histogram(binwidth = 0.5) 
-  + theme_economist() 
-  + xlab('Total Cup Points') 
-  + ylab('Count') 
-  + ggtitle('Distribution of Target Variable')
+coffee %>% ggplot(aes(Total.Cup.Points)) + geom_histogram(binwidth = 0.5) + theme_economist() + xlab('Total Cup Points') + ylab('Count') + ggtitle('Distribution of Target Variable')
 
 #Predictor Exploration
 #Number of Countries
@@ -121,19 +116,6 @@ predictors <- c('altitude_mean_meters',
                 'Variety', 
                 'Category.One.Defects', 
                 'Category.Two.Defects')
-
-#Print relationship between target and predictors
-attach(coffee)
-par(mfrow=c(3,3))
-plot(altitude_mean_meters, Total.Cup.Points, ylab='Points')
-plot(as.factor(coffee$Color), coffee$Total.Cup.Points, xlab='Color', ylab='Points', )
-plot(coffee$Country, coffee$Total.Cup.Points, xlab='Country', ylab='Points')
-plot(coffee$Harvest.Year, coffee$Total.Cup.Points, xlab='Year', ylab='Points')
-plot(coffee$Moisture, coffee$Total.Cup.Points, xlab='Moisture', ylab='Points')
-plot(as.factor(coffee$Processing.Method), coffee$Total.Cup.Points, xlab='Process', ylab='Points')
-plot(as.factor(coffee$Variety), coffee$Total.Cup.Points, xlab='Variety', ylab='Points')
-plot(coffee$Category.One.Defects, coffee$Total.Cup.Points, xlab='Cat One Defects', ylab='Points')
-plot(coffee$Category.Two.Defects, coffee$Total.Cup.Points, xlab='Cat Two Defects', ylab='Points')
 
 #Print metrics for numeric predictors
 df <- data.frame(row.names = c('Altitude', 'Harvest.Year', 'Moisture', 'Category.One.Defects', 'Category.Two.Defects'))
