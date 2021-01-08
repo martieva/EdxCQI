@@ -68,10 +68,6 @@ RMSE <- function(true_quality, predicted_quality){
   sqrt(mean((true_quality - predicted_quality)^2, na.rm = T))
 }
 
-mean(coffee$Altitude, na.rm = T)
-sd(coffee$Altitude, na.rm = T)
-cor(coffee$Total.Cup.Points, coffee$Altitude)
-
 mean(coffee$Harvest.Year, na.rm = T)
 cor(coffee$Total.Cup.Points, coffee$Harvest.Year, use = 'complete.obs')
 
